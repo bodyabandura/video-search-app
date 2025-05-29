@@ -13,7 +13,6 @@ A full-stack application for searching YouTube videos, tracking search history, 
 - **Analytics:** Shows popular search queries and their counts.
 - **Video Details:** Fetches detailed metadata for a specific video.
 - **CQRS Pattern:** All business logic is handled via CQRS handlers.
-- **Proxy:** All YouTube API requests are proxied through the backend.
 
 ---
 
