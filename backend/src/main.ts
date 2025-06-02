@@ -7,6 +7,7 @@ async function bootstrap() {
     origin: [
       'https://video-search-app-azure.vercel.app',
       'http://localhost:5173',
+      'https://video-search-app-bohdanbandurawork-gmailcoms-projects.vercel.app',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
