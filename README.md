@@ -1,143 +1,66 @@
-# YouTube Video Search API
+# YouTube Video Search Monorepo
 
-A full-stack application for searching YouTube videos, tracking search history, analytics, and viewing video details.
+This repository contains both the frontend and backend for the YouTube Video Search project.
 
----
+## Structure
 
-## Backend (NestJS, GraphQL, CQRS, MikroORM)
+- `/frontend` — React + Vite + Apollo Client (UI)
+- `/backend` — NestJS + GraphQL + MikroORM (API)
 
-### Features
+## Getting Started
 
-- **Search YouTube Videos:** GraphQL query with pagination.
-- **Search History:** Stores each search query with a timestamp in PostgreSQL.
-- **Analytics:** Shows popular search queries and their counts.
-- **Video Details:** Fetches detailed metadata for a specific video.
-- **CQRS Pattern:** All business logic is handled via CQRS handlers.
+### Prerequisites
 
----
+- Node.js 16.x or later
+- npm 7.x or later
 
-### Getting Started
+### Setup
 
-#### 1. Clone the repository
+1. **Clone the repository:**
 
-```bash
-git clone https://github.com/your-username/video-search-api.git
-cd video-search-api
-```
+   ```bash
+   git clone https://github.com/your-username/video-search-monorepo.git
+   cd video-search-monorepo
+   ```
 
-#### 2. Install dependencies
+2. **Install dependencies for each app:**
 
-```bash
-npm install
-```
+   ```bash
+   cd frontend
+   npm install
+   cd ../backend
+   npm install
+   ```
 
-#### 3. Create a `.env` file in the root
+3. **Environment variables:**
+   - Set up your `.env` file in `/backend` (see `/backend/README.md` for details).
 
-```env
-DATABASE_URL=postgres://<user>:<password>@<host>:<port>/<database>
-YOUTUBE_API_KEY=your_youtube_api_key
-PORT=3000
-```
+### Development
 
-- You can get a YouTube API key from the [Google Cloud Console](https://console.cloud.google.com/).
-- Example for Aiven/Postgres:
+- **Frontend:**
+
+  ```bash
+  cd frontend
+  npm run dev
   ```
-  DATABASE_URL=postgres://avnadmin:password@pg-xxxx.aivencloud.com:23900/defaultdb?sslmode=require
+
+  Runs at [http://localhost:5173](http://localhost:5173)
+
+- **Backend:**
+  ```bash
+  cd backend
+  npm run start:dev
   ```
+  Runs at [http://localhost:3000/graphql](http://localhost:3000/graphql)
 
-#### 4. Run database migrations
+### Deployment
 
-```bash
-npx mikro-orm migration:up
-```
-
-#### 5. Start the backend
-
-```bash
-npm run start:dev
-```
-
-#### 6. Open GraphQL Playground
-
-Visit [http://localhost:3000/graphql](http://localhost:3000/graphql) to test queries and mutations.
+- This repo is ready for deployment on Vercel as a monorepo.
+- Set up two Vercel projects:
+  - One with `frontend` as the root directory.
+  - One with `backend` as the root directory.
+- Set environment variables in the Vercel dashboard for each project.
 
 ---
 
-### Example GraphQL Queries
-
-#### Search Videos
-
-```graphql
-query {
-  searchVideos(q: "NestJS tutorial") {
-    results {
-      videoId
-      title
-      description
-      thumbnailUrl
-      publishedAt
-    }
-    totalResults
-    nextPageToken
-    prevPageToken
-  }
-}
-```
-
-#### Search History
-
-```graphql
-query {
-  searchHistory {
-    history {
-      query
-      timestamp
-    }
-  }
-}
-```
-
-#### Analytics
-
-```graphql
-query {
-  searchAnalytics {
-    analytics {
-      query
-      count
-    }
-  }
-}
-```
-
-#### Video Details
-
-```graphql
-query {
-  videoDetails(videoId: "dQw4w9WgXcQ") {
-    videoId
-    title
-    description
-    thumbnailUrl
-    publishedAt
-    viewCount
-    likeCount
-    commentCount
-  }
-}
-```
-
----
-
-## Frontend
-
-- See `/frontend` folder for the React app (instructions in that folder).
-
----
-
-## Deployment
-
-- You can deploy the backend to any cloud provider (Heroku, AWS, etc.).
-- Make sure to set the environment variables in your deployment environment.
-
----
+For more details, see the `README.md` files in each subfolder.
