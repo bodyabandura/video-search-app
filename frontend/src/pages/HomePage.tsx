@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import VideoCard from '../components/VideoCard';
 import { SEARCH_VIDEOS } from '../graphql/queries';
@@ -8,8 +8,21 @@ import type { Video } from '../types';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [pageToken, setPageToken] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const stateSearchQuery = location.state?.searchQuery;
+    const statePageToken = location.state?.pageToken;
+    
+    if (stateSearchQuery) {
+      setSearchQuery(stateSearchQuery);
+    }
+    if (statePageToken) {
+      setPageToken(statePageToken);
+    }
+  }, [location.state]);
 
   const { data: searchData, loading: searchLoading, error: searchError } = useQuery(SEARCH_VIDEOS, {
     variables: {
@@ -27,7 +40,12 @@ export default function HomePage() {
   };
 
   const handleVideoClick = (videoId: string) => {
-    navigate(`/video/${videoId}`);
+    navigate(`/video/${videoId}`, { 
+      state: { 
+        searchQuery,
+        pageToken: searchData?.searchVideos?.nextPageToken || undefined
+      } 
+    });
   };
 
   return (
@@ -45,6 +63,7 @@ export default function HomePage() {
         <SearchBar
           onSearch={handleSearch}
           isLoading={searchLoading}
+          initialValue={searchQuery}
         />
       </div>
 

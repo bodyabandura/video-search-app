@@ -4,6 +4,7 @@ export interface Video {
   description: string;
   thumbnailUrl: string;
   publishedAt: string;
+  viewCount?: number;
 }
 
 export interface VideoDetails extends Video {
@@ -32,6 +33,7 @@ export interface SearchAnalyticsItem {
 export interface SearchBarProps {
   onSearch: (query: string) => void;
   isLoading?: boolean;
+  initialValue?: string;
 }
 
 export interface SearchHistoryProps {
